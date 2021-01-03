@@ -66,3 +66,23 @@ exports.signin = (req,res) => {
     })
 }
 
+// nháp
+exports.getAllUser = async (req,res,next) => {
+    try {
+        const users = await User.find()
+        return res.json({users})
+    } catch (error) {
+        next(error)        
+    }
+}
+
+exports.getUserById = async (req,res,next) =>{
+    try {
+        const user = await User.findById(req.params.id)
+        if(user === null) throw new APIError({message : "user not exist"})
+        return res.json({user})
+    } catch (err) {
+        next(err)
+    }
+}
+
